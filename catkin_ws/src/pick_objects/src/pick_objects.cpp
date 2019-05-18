@@ -17,17 +17,26 @@ int main(int argc, char** argv){
     ROS_INFO("Waiting for the move_base action server to come up");
   }
 
+  //Define 2 goal messages
   move_base_msgs::MoveBaseGoal goal;
+  move_base_msgs::MoveBaseGoal goal2;
 
+  //Create the 2 zones necessary for publishing
   // set up the frame parameters
   goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
+  goal2.target_pose.header.frame_id = "map";
+  goal2.target_pose.header.stamp = ros::Time::now();
 
-  // Define a position and orientation for the robot to reach
-  goal.target_pose.pose.position.x = 1.0;
+  // Define a position and orientation for the robot in order to arrive at each goal respectively.
+  goal.target_pose.pose.position.x = 0.5;
+  goal.target_pose.pose.position.y = 0.0;
   goal.target_pose.pose.orientation.w = 1.0;
+  goal2.target_pose.pose.position.x = 0.0;
+  goal2.target_pose.pose.position.y = 0.5;
+  goal2.target_pose.pose.orientation.w = 1.0;
 
-   // Send the goal position and orientation for the robot to reach
+  // Send the 1st goal position and orientation for the robot to reach
   ROS_INFO("Sending goal");
   ac.sendGoal(goal);
 
@@ -35,10 +44,29 @@ int main(int argc, char** argv){
   ac.waitForResult();
 
   // Check if the robot reached its goal
-  if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-    ROS_INFO("Hooray, the base moved 1 meter forward");
-  else
-    ROS_INFO("The base failed to move forward 1 meter for some reason");
+  if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED){
+    ROS_INFO("Yay! First Robot zone has been reached!");
+    // 5 Second pause will also be required after reaching pickpu zone. 
+    sleep(5);
+  }
+  else{
+    ROS_INFO("Robot is unable to reach the first zone...");
+    return 0;
+  }
+
+  // Send the 2nd goal position and orientation for the robot to reach
+  ROS_INFO("Sending goal2");
+  ac.sendGoal(goal2);
+
+  // Wait an infinite time for the results
+  ac.waitForResult();
+   
+  if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED){
+    ROS_INFO("Yay! Second Robot zone has been reached!");
+  }
+  else{
+    ROS_INFO("Robot is unable to reach the second zone...");
+  }
 
   return 0;
 }
