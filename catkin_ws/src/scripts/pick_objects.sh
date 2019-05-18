@@ -10,6 +10,6 @@ xterm -e "cd ${catkin_workspace} && source devel/setup.bash && roslaunch turtleb
 sleep 3
 # Launch view navigation launch file
 xterm -e "cd ${catkin_workspace} && source devel/setup.bash && roslaunch turtlebot_rviz_launchers view_navigation.launch" &
-#sleep 8
+sleep 10
 # Launch the pick_objects node
-#xterm -e "cd ${catkin_workspace} && source devel/setup.bash && rosrun pick_objects pick_objects"
+xterm -e "cd ${catkin_workspace} && source devel/setup.bash && rosrun pick_objects pick_objects"

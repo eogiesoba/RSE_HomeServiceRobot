@@ -62,7 +62,8 @@ int main(int argc, char** argv){
   ac.waitForResult();
    
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED){
-    ROS_INFO("Yay! Second Robot zone has been reached!");
+    ROS_INFO("Alright! Second Robot zone has been reached!");
+    sleep(7);
   }
   else{
     ROS_INFO("Robot is unable to reach the second zone...");
