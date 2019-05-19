@@ -51,10 +51,10 @@ int main( int argc, char** argv )
   marker.color.g = 0.65f;
   marker.color.b = 0.0f;
   marker.color.a = 1.0;
-  // Give the marker a 1 cubic meter size. 
-  marker.scale.x = 1.0;
-  marker.scale.y = 1.0;
-  marker.scale.z = 1.0;
+  // Give the marker a 0.27 cubic meter size. 
+  marker.scale.x = 0.27;
+  marker.scale.y = 0.27;
+  marker.scale.z = 0.27;
 
   // Create state vairable.
   uint32_t state_var = 0;
@@ -93,7 +93,7 @@ int main( int argc, char** argv )
         state_var = 1;
         break;
       case 1:
-        ROS_INFO("Waiting for robot to pick up object.");
+        ROS_INFO("Waiting for robot to pick up marker.");
         sleep(1);
         //See if radius is less than delta and then move to next state. 
         x_length = fabs(marker.pose.position.x - x_Odom);

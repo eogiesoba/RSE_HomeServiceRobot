@@ -8,8 +8,8 @@ sleep 3
 # Launch gmapping demo file
 xterm -e "cd ${catkin_workspace} && source devel/setup.bash && roslaunch turtlebot_gazebo amcl_demo.launch" &
 sleep 3
-# Launch view navigation launch file
-xterm -e "cd ${catkin_workspace} && source devel/setup.bash && roslaunch turtlebot_rviz_launchers view_navigation.launch" &
+# Launch custom rviz launch file
+xterm -e "cd ${catkin_workspace} && source devel/setup.bash && roslaunch rviz_markers rviz.launch" &
 sleep 3
 # Launch the pick_objects node
 xterm -e "cd ${catkin_workspace} && source devel/setup.bash && rosrun add_markers add_markers"

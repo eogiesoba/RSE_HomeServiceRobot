@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+	
+  <!--launch rviz-->
+  <node name="my_saved_rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find rviz_markers)/launch/rviz_home_service.rviz"/>
+  
+</launch>
