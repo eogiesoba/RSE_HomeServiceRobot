@@ -465,12 +465,6 @@ rostest_DIR:PATH=/opt/ros/kinetic/share/rostest/cmake
 rostime_DIR:PATH=/opt/ros/kinetic/share/rostime/cmake
 
 //Value Computed by CMake
-rviz_Markers_BINARY_DIR:STATIC=/home/workspace/RSE_HomeServiceRobot/catkin_ws/build/rviz_Markers
-
-//Value Computed by CMake
-rviz_Markers_SOURCE_DIR:STATIC=/home/workspace/RSE_HomeServiceRobot/catkin_ws/src/rviz_Markers
-
-//Value Computed by CMake
 rviz_markers_BINARY_DIR:STATIC=/home/workspace/RSE_HomeServiceRobot/catkin_ws/build/rviz_markers
 
 //Value Computed by CMake

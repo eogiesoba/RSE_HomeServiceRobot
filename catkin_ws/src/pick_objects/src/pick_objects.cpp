@@ -29,11 +29,11 @@ int main(int argc, char** argv){
   goal2.target_pose.header.stamp = ros::Time::now();
 
   // Define a position and orientation for the robot in order to arrive at each goal respectively.
-  goal.target_pose.pose.position.x = 0.5;
+  goal.target_pose.pose.position.x = -1.0;
   goal.target_pose.pose.position.y = 0.0;
   goal.target_pose.pose.orientation.w = 1.0;
-  goal2.target_pose.pose.position.x = 0.0;
-  goal2.target_pose.pose.position.y = 0.5;
+  goal2.target_pose.pose.position.x = -1.0;
+  goal2.target_pose.pose.position.y = -2.0;
   goal2.target_pose.pose.orientation.w = 1.0;
 
   // Send the 1st goal position and orientation for the robot to reach

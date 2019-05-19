@@ -24,14 +24,14 @@ int main( int argc, char** argv )
   // Create initial x,y,delta, and radius values
   float x_length = 0.0;
   float y_length = 0.0;
-  float delta = 0.5;
+  float delta = 0.2;
   float rad = 0.0;
   // Define position and orientation of 2 robot location goals. 
-  float x_goal = 0.5;
+  float x_goal = -1.0;
   float y_goal = 0.0;
   float w_goal = 1.0;
-  float x_goal2 = 0.0;
-  float y_goal2 = 0.5;
+  float x_goal2 = -1.0;
+  float y_goal2 = -2.0;
   float w_goal2 = 1.0;
 
   // Initialize marker
@@ -51,10 +51,10 @@ int main( int argc, char** argv )
   marker.color.g = 0.65f;
   marker.color.b = 0.0f;
   marker.color.a = 1.0;
-  // Give the marker a 0.27 cubic meter size. 
-  marker.scale.x = 0.27;
-  marker.scale.y = 0.27;
-  marker.scale.z = 0.27;
+  // Give the marker a 1.0 cubic meter size. 
+  marker.scale.x = 1.2;
+  marker.scale.y = 1.2;
+  marker.scale.z = 1.2;
 
   // Create state vairable.
   uint32_t state_var = 0;
@@ -93,11 +93,10 @@ int main( int argc, char** argv )
         state_var = 1;
         break;
       case 1:
-        ROS_INFO("Waiting for robot to pick up marker.");
+        ROS_INFO("Waiting for robot to pick up object.");
         sleep(1);
         //See if radius is less than delta and then move to next state. 
         x_length = fabs(marker.pose.position.x - x_Odom);
-        y_length = fabs(marker.pose.position.y - y_Odom);
         rad = sqrt(pow(x_length, 2) + pow(x_length, 2));
         if (rad < delta) { 
              ROS_INFO("Radius is less than delta. Going to state 2...");
@@ -107,7 +106,7 @@ int main( int argc, char** argv )
 
       case 2:
         ROS_INFO("Marker has just been picked up. Now Hiding marker.");
-        sleep(2);
+        sleep(5); //5 second pause after pickup
         // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
         marker.action = visualization_msgs::Marker::DELETE;
         // Publish marker
@@ -119,9 +118,8 @@ int main( int argc, char** argv )
         ROS_INFO("Waiting for marker to be dropped off at final location.");
         sleep(2);
         //See if radius is less than delta and then move to next state. 
-        x_length = fabs(marker.pose.position.x - x_Odom);
-        y_length = fabs(marker.pose.position.y - y_Odom);
-        rad = sqrt(pow(x_length, 2) + pow(x_length, 2));
+        y_length = fabs(y_goal2 - y_Odom);
+        rad = sqrt(pow(y_length, 2) + pow(y_length, 2));
         if (rad < delta) { 
              ROS_INFO("Radius is less than delta. Going to state 4...");
             state_var = 4;
@@ -130,7 +128,7 @@ int main( int argc, char** argv )
 
       case 4:
         ROS_INFO("Final Destination Reached. Dropping of marker now.");
-        sleep(2);
+        sleep(5); //5 second pause after drop off.
         // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
         marker.action = visualization_msgs::Marker::ADD;
         // Set position and orientation of marker. 
@@ -144,6 +142,7 @@ int main( int argc, char** argv )
         // Publish marker
         marker_pub.publish(marker);
         ROS_INFO("Congratulations! Marker has successfully reached it's final destination!");
+	break;
       default:
         ROS_INFO("No valid state variable has been found.");
     }
